@@ -6,10 +6,12 @@ def main():
     print("Logs from your program will appear here!")
 
     # Uncomment the code below to pass the first stage
-    #
-    server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
-    conn, _ = server_socket.accept()
-    conn.sendall(b"+PONG\r\n")
+    while True {
+        server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
+        conn, _ = server_socket.accept()
+        conn.sendall(b"+PONG\r\n")
+    }
+    
 
 if __name__ == "__main__":
     main()
