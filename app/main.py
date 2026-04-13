@@ -8,7 +8,6 @@ def main():
     # Uncomment the code below to pass the first stage
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
     conn, _ = server_socket.accept()
-    conn.sendall(b"+PONG\r\n")
     try:
         while True:
             _ = conn.recv(1024)
