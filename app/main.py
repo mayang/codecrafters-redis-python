@@ -5,7 +5,7 @@ def handle_response(cmd):
     if cmd == NONE or cmd == NONE:
         return b"-ERR invalid command"
     elif cmd[0].upper() == b"PING":
-        reurn b"+PONG\r\n"
+        return b"+PONG\r\n"
     elif cmd[0].upper() == b"ECHO":
         return b"$" + str(len(command[1])).encode() + b"\r\n" + command[1] + b"\r\n"
 
