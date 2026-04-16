@@ -2,7 +2,7 @@ import socket  # noqa: F401
 import threading
 
 def handle_response(cmd):
-    if cmd == NONE or cmd == NONE:
+    if cmd == None or cmd == None:
         return b"-ERR invalid command"
     elif cmd[0].upper() == b"PING":
         return b"+PONG\r\n"
