@@ -1,16 +1,23 @@
 import socket  # noqa: F401
 import threading
 
+def handle_response(cmd):
+    if cmd == NONE or cmd == NONE:
+        return b"-ERR invalid command"
+    elif cmd[0].upper() == b"PING":
+        reurn b"+PONG\r\n"
+    elif cmd[0].upper() == b"ECHO":
+        return b"$" + str(len(command[1])).encode() + b"\r\n" + command[1] + b"\r\n"
+
 def handle_connection(conn: socket.socket):
     while True:
-        _ = conn.recv(1024)
-        conn.sendall(b"+PONG\r\n")
+        data = conn.recv(1024)
+        conn.sendall(handle_response(data))
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
 
-    # Uncomment the code below to pass the first stage
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
     try:
         while True:
