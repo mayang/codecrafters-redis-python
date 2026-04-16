@@ -14,7 +14,7 @@ def main():
     try:
         while True:
             conn, _ = server_socket.accept()
-            threading.Thread(target=handle_connection, args=(conn))
+            threading.Thread(target=handle_connection, args=(conn)).start()
     except:
         conn.close()
 
