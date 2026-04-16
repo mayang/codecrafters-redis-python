@@ -7,7 +7,7 @@ def handle_response(cmd):
     elif cmd[0].upper() == b"PING":
         return b"+PONG\r\n"
     elif cmd[0].upper() == b"ECHO":
-        return b"$" + str(len(command[1])).encode() + b"\r\n" + command[1] + b"\r\n"
+        return b"$" + str(len(cmd[1])).encode() + b"\r\n" + command[1] + b"\r\n"
 
 def handle_connection(conn: socket.socket):
     while True:
