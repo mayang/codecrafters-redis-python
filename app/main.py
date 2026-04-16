@@ -2,8 +2,9 @@ import socket  # noqa: F401
 import threading
 
 def handle_connection(conn: socket.socket):
-    _ = conn.recv(1024)
-    conn.sendall(b"+PONG\r\n")
+    while True:
+        _ = conn.recv(1024)
+        conn.sendall(b"+PONG\r\n")
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -14,7 +15,7 @@ def main():
     try:
         while True:
             conn, _ = server_socket.accept()
-            threading.Thread(target=handle_connection, args=(conn)).start()
+            threading.Thread(target=handle_connection, args=(conn,)).start()
     except:
         conn.close()
 
