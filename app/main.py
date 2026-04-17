@@ -9,7 +9,7 @@ def parse_resp(data):
 
     try:
         num_elements = int(parts[0][1:])
-        elems = parts[2:2]
+        elems = parts[2::2]
     except:
         return None
 
