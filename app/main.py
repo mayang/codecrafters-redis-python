@@ -1,6 +1,24 @@
 import socket  # noqa: F401
 import threading
 
+def parse_resp(data):
+    if not data or data[0] != ord(b"*"):
+        return None
+
+    parts = daa.split("\r\n")
+
+    try:
+        num_elements = int(parts[0][1:])
+    except:
+        return None
+
+    # if nothing or len(rest of parts) does not match num_elements
+    # return None
+    if len(parts[1:]) != num_elements:
+        return None
+
+    return parts[1:] 
+
 def handle_response(cmd):
     if cmd == None or cmd == None:
         return b"-ERR invalid command"
@@ -12,7 +30,7 @@ def handle_response(cmd):
 def handle_connection(conn: socket.socket):
     while True:
         data = conn.recv(1024)
-        conn.sendall(handle_response(data))
+        conn.sendall(handle_response(parse_resp(data)))
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
