@@ -9,15 +9,16 @@ def parse_resp(data):
 
     try:
         num_elements = int(parts[0][1:])
+        elems = parts[2:2]
     except:
         return None
 
     # if nothing or len(rest of parts) does not match num_elements
     # return None
-    if len(parts[1:]) != num_elements:
+    if len(elems) != num_elements:
         return None
 
-    return parts[1:] 
+    return elems 
 
 def handle_response(cmd):
     if cmd == None or cmd == None:
