@@ -5,7 +5,7 @@ def parse_resp(data):
     if not data or data[0] != ord(b"*"):
         return None
 
-    parts = daa.split("\r\n")
+    parts = data.split("\r\n")
 
     try:
         num_elements = int(parts[0][1:])
