@@ -21,7 +21,7 @@ def parse_resp(data):
 
 def handle_response(cmd):
     if cmd == None or cmd == None:
-        return b"-ERR invalid command"
+        return b"-ERR invalid command\r\n"
     elif cmd[0].upper() == b"PING":
         return b"+PONG\r\n"
     elif cmd[0].upper() == b"ECHO":
