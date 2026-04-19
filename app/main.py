@@ -44,7 +44,7 @@ def handle_response(cmd):
     elif cmd[0].upper() == b"ECHO":
         return b"$" + str(len(cmd[1])).encode() + b"\r\n" + cmd[1] + b"\r\n"
     elif cmd[0].upper() == b"SET":
-        return hanle_SET(cmd[1], cmd[2])
+        return handle_SET(cmd[1], cmd[2])
     elif cmd[0].upper() == b"GET":
         return handle_GET(cmd[1]) 
 
