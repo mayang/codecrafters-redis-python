@@ -15,7 +15,7 @@ def handle_GET(key):
     return f"${val_len}\r\n{val}\r\n".encode() 
 
 def handle_SET(key, val):
-    storage[key] = val
+    storage[key] = val.decode()
     print(val)
     print(type(val))
     return b"+OK\r\n"
