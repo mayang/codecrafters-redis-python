@@ -14,6 +14,7 @@ def handle_GET(key):
     return f"${val_len}\r\n${val}\r\n".encode() 
 
 def handle_SET(key, val):
+    storage[key] = val
     return b"+OK\r\n"
 
 def parse_resp(data):
@@ -44,7 +45,7 @@ def handle_response(cmd):
         return b"$" + str(len(cmd[1])).encode() + b"\r\n" + cmd[1] + b"\r\n"
     elif cmd[0].upper() == b"SET":
         return hanle_SET(cmd[1], cmd[2])
-    elif cmd[0].upper() == b"GET"
+    elif cmd[0].upper() == b"GET":
         return handle_GET(cmd[1]) 
 
 def handle_connection(conn: socket.socket):
