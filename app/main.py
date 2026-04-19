@@ -4,11 +4,10 @@ import threading
 storage = {}
 
 def handle_GET(key):
-    val = ""
     try:
         val = storage[key] 
     except:
-        return b"-ERR no key\r\n"
+        return "$-1\r\n"
 
     val_len = len(val)
     return f"${val_len}\r\n{val}\r\n".encode() 
