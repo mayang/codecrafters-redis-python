@@ -24,7 +24,7 @@ def handle_SET(key, val, opt = None, arg  = None):
         if opt  == b"PX":
             time = time / 1000
 
-        threading.Timer(time, lambda key: del storage[key], args=(key.decode(),))
+        threading.Timer(time, lambda key: storage.pop(key), args=(key.decode(),))
 
     return b"+OK\r\n"
 
