@@ -11,7 +11,7 @@ def handle_GET(key):
         return b"-ERR no key\r\n"
 
     val_len = len(val)
-    return f"${val_len}\r\n${val}\r\n".encode() 
+    return f"${val_len}\r\n{val}\r\n".encode() 
 
 def handle_SET(key, val):
     storage[key] = val
