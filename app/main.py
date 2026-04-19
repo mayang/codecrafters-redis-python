@@ -6,6 +6,8 @@ storage = {}
 def handle_GET(key):
     try:
         val = storage[key] 
+        print(val)
+        print(type(val))
     except:
         return "$-1\r\n"
 
