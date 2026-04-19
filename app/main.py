@@ -5,19 +5,27 @@ storage = {}
 
 def handle_GET(key):
     try:
-        val = storage[key] 
-        print(val)
-        print(type(val))
+        val = storage[key.decode()] 
     except:
         return "$-1\r\n"
 
     val_len = len(val)
     return f"${val_len}\r\n{val}\r\n".encode() 
 
-def handle_SET(key, val):
-    storage[key] = val.decode()
-    print(val)
-    print(type(val))
+
+# opt  and arg and optional but arg needs opt 
+# EX - expires in some seconds
+# PX expires in ms
+def handle_SET(key, val, opt = None, arg  = None):
+    storage[key.decode()] = val.decode()
+   
+   if arg != None and opt.upper() == b"EX" or opt.upper() == b"PX": 
+        time = int(arg.decode())
+        if opt  == b"PX":
+            time = time / 1000
+
+        threading.Timer(time, lambda key: del storage[key], args=(key.decode(),))
+
     return b"+OK\r\n"
 
 def parse_resp(data):
@@ -47,7 +55,12 @@ def handle_response(cmd):
     elif cmd[0].upper() == b"ECHO":
         return b"$" + str(len(cmd[1])).encode() + b"\r\n" + cmd[1] + b"\r\n"
     elif cmd[0].upper() == b"SET":
-        return handle_SET(cmd[1], cmd[2])
+        if len(cmd) == 3:
+            return handle_SET(cmd[1], cmd[2])
+        elif len(cmd) == 5:
+            return handle_SET(cmd[1], cmd[2], cmd[3], cmd[4])
+        else:
+            return b"-ERR invalid arguments\r\n"
     elif cmd[0].upper() == b"GET":
         return handle_GET(cmd[1]) 
 
