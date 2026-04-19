@@ -16,6 +16,8 @@ def handle_GET(key):
 
 def handle_SET(key, val):
     storage[key] = val
+        print(val)
+        print(type(val))
     return b"+OK\r\n"
 
 def parse_resp(data):
