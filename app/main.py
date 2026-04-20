@@ -7,7 +7,7 @@ def handle_GET(key):
     try:
         val = storage[key.decode()] 
     except:
-        return "$-1\r\n"
+        return b"$-1\r\n"
 
     val_len = len(val)
     return f"${val_len}\r\n{val}\r\n".encode() 
