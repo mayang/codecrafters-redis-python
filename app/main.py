@@ -23,6 +23,7 @@ def handle_SET(key, val, opt = None, arg  = None):
         time = int(arg.decode())
         if opt  == b"PX":
             time = time / 1000
+        print('wait')
         print(time)
         threading.Timer(time, lambda key: storage.pop(key), args=(key.decode(),))
 
