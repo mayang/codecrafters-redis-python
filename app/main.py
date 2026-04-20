@@ -13,6 +13,7 @@ def handle_GET(key):
     return f"${val_len}\r\n{val}\r\n".encode() 
 
 def expire_val(key):
+    print('expired!')
     del storage[key]
 
 # opt  and arg and optional but arg needs opt 
