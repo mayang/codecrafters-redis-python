@@ -28,8 +28,8 @@ def handle_SET(key, val, opt = None, arg  = None):
             time = time / 1000
         print('wait')
         print(time)
-        #t = threading.Timer(time, lambda key: storage.pop(key), args=(key.decode(),))
-        t = threading.Timer(time, expire_val, args=(key.decode(), ))
+        t = threading.Timer(time, lambda key: storage.pop(key), args=(key.decode(),))
+        #t = threading.Timer(time, expire_val, args=(key.decode(), ))
         t.start()
 
     return b"+OK\r\n"
