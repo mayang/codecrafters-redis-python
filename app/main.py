@@ -19,11 +19,11 @@ def handle_GET(key):
 def handle_SET(key, val, opt = None, arg  = None):
     storage[key.decode()] = val.decode()
    
-    if arg != None and opt.upper() == b"EX" or opt.upper() == b"PX":
+    if arg != None and (opt.upper() == b"EX" or opt.upper() == b"PX"):
         time = int(arg.decode())
         if opt  == b"PX":
             time = time / 1000
-
+        print(time)
         threading.Timer(time, lambda key: storage.pop(key), args=(key.decode(),))
 
     return b"+OK\r\n"
