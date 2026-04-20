@@ -12,6 +12,8 @@ def handle_GET(key):
     val_len = len(val)
     return f"${val_len}\r\n{val}\r\n".encode() 
 
+def expire_val(key):
+    del storage[key]
 
 # opt  and arg and optional but arg needs opt 
 # EX - expires in some seconds
@@ -25,7 +27,8 @@ def handle_SET(key, val, opt = None, arg  = None):
             time = time / 1000
         print('wait')
         print(time)
-        threading.Timer(time, lambda key: storage.pop(key), args=(key.decode(),))
+        # threading.Timer(time, lambda key: storage.pop(key), args=(key.decode(),))
+        threading.Timer(time, expire_val, args=(key.decode(), ))
 
     return b"+OK\r\n"
 
