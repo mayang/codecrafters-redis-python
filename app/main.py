@@ -12,13 +12,6 @@ def handle_GET(key):
     val_len = len(val)
     return f"${val_len}\r\n{val}\r\n".encode() 
 
-def expire_val(key):
-    print('expired!')
-    del storage[key]
-
-# opt  and arg and optional but arg needs opt 
-# EX - expires in some seconds
-# PX expires in ms
 def handle_SET(key, val, opt = None, arg  = None):
     storage[key.decode()] = val.decode()
    
