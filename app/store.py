@@ -1,7 +1,7 @@
 import threading
 
 class Store:
-    def __init__():
+    def __init__(self):
         self.store = {}
 
     def get(key):
