@@ -2,7 +2,11 @@ import threading
 
 class Store:
     def __init__(self):
+        self.username = "default"
         self.store = {}
+
+    def whoami(self):
+        return f"${len(self.username)}\r\n{self.username}\r\n".encode()
 
     def get(self, key):
         try:
@@ -26,3 +30,7 @@ class Store:
             t.start()
 
         return b"+OK\r\n"
+
+    def acl(self, opt):
+        if opt.upper() == b"WHOAMI":
+            return self.whoami()

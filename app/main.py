@@ -38,8 +38,11 @@ def handle_response(cmd):
             return store.set(cmd[1], cmd[2], cmd[3], cmd[4])
         else:
             return b"-ERR invalid arguments\r\n"
+    # both of these should have error checking if there is no cmd[1]
     elif cmd[0].upper() == b"GET":
         return store.get(cmd[1]) 
+    elif cmd[0].upper() == b"ACL":
+        return store.acl(cmd[1])
 
 def handle_connection(conn: socket.socket):
     while True:
