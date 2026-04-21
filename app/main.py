@@ -1,6 +1,6 @@
 import socket  # noqa: F401
 import threading
-from  redis import Store
+from redis import Store
 
 store = Store()
 
