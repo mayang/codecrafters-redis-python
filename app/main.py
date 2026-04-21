@@ -1,33 +1,10 @@
 import socket  # noqa: F401
 import threading
+from  redis import Store
 
-storage = {}
+store = Store()
 
-def handle_GET(key):
-    try:
-        val = storage[key.decode()] 
-    except:
-        return b"$-1\r\n"
-
-    val_len = len(val)
-    return f"${val_len}\r\n{val}\r\n".encode() 
-
-def handle_SET(key, val, opt = None, arg  = None):
-    storage[key.decode()] = val.decode()
-   
-    if arg != None and (opt.upper() == b"EX" or opt.upper() == b"PX"):
-        time = int(arg.decode())
-        if opt  == b"PX":
-            time = time / 1000
-        print('wait')
-        print(time)
-        t = threading.Timer(time, lambda key: storage.pop(key), args=(key.decode(),))
-        #t = threading.Timer(time, expire_val, args=(key.decode(), ))
-        t.start()
-
-    return b"+OK\r\n"
-
-def parse_resp(data):
+def parse_response(data):
     if not data or data[0] != ord(b"*"):
         return None
 
@@ -47,7 +24,7 @@ def parse_resp(data):
     return elems 
 
 def handle_response(cmd):
-    if cmd == None or cmd == None:
+    if cmd == None:
         return b"-ERR invalid command\r\n"
     elif cmd[0].upper() == b"PING":
         return b"+PONG\r\n"
@@ -55,18 +32,18 @@ def handle_response(cmd):
         return b"$" + str(len(cmd[1])).encode() + b"\r\n" + cmd[1] + b"\r\n"
     elif cmd[0].upper() == b"SET":
         if len(cmd) == 3:
-            return handle_SET(cmd[1], cmd[2])
+            return store.set(cmd[1], cmd[2])
         elif len(cmd) == 5:
-            return handle_SET(cmd[1], cmd[2], cmd[3], cmd[4])
+            return store.set(cmd[1], cmd[2], cmd[3], cmd[4])
         else:
             return b"-ERR invalid arguments\r\n"
     elif cmd[0].upper() == b"GET":
-        return handle_GET(cmd[1]) 
+        return store.get(cmd[1]) 
 
 def handle_connection(conn: socket.socket):
     while True:
         data = conn.recv(1024)
-        conn.sendall(handle_response(parse_resp(data)))
+        conn.sendall(handle_response(parse_response(data)))
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
