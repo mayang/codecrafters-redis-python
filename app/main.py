@@ -31,6 +31,7 @@ def handle_response(cmd):
     elif cmd[0].upper() == b"ECHO":
         return b"$" + str(len(cmd[1])).encode() + b"\r\n" + cmd[1] + b"\r\n"
     elif cmd[0].upper() == b"SET":
+        print(cmd)
         if len(cmd) == 3:
             return store.set(cmd[1], cmd[2])
         elif len(cmd) == 5:
