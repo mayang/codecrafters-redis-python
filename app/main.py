@@ -1,6 +1,6 @@
 import socket  # noqa: F401
 import threading
-from store import Store
+from app.store import Store
 
 store = Store()
 
