@@ -4,7 +4,7 @@ class Store:
     def __init__(self):
         self.store = {}
 
-    def get(key):
+    def get(self, key):
         try:
             val = self.store[key.decode()] 
         except:
@@ -13,7 +13,7 @@ class Store:
         val_len = len(val)
         return f"${val_len}\r\n{val}\r\n".encode() 
 
-    def set(key, val, opt = None, arg = None):
+    def set(self, key, val, opt = None, arg = None):
         self.store[key.decode()] = val.decode()
        
         if arg != None and (opt.upper() == b"EX" or opt.upper() == b"PX"):
